@@ -3,7 +3,7 @@
 exec 2>&1
 
 sv up ganache || exit 1
-sv up redis-bob-se-eth || exit 1
+sv up redis-eth-bob || exit 1
 
 exec ilp-settlement-ethereum \
   --private_key cc96601bc52293b53c4736a12af9130abf347669b3813f9ec4cafdf6991b087e \

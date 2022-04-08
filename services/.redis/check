@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. config.sh
+
+exec redis-cli -p "$PORT" ping

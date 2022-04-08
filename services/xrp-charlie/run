@@ -2,7 +2,7 @@
 
 exec 2>&1
 
-sv up redis-charlie-se-xrp || exit 1
+sv up redis-xrp-charlie || exit 1
 
 export DEBUG="*"
 export CONNECTOR_URL="http://localhost:9771"

@@ -44,8 +44,25 @@
             echo "Created $name"
           '';
         };
+        rund = pkgs.writeShellApplication {
+          name = "rund";
+
+          runtimeInputs = [ pkgs.runit pkgs.watch pkgs.pstree ];
+
+          text = ''
+            runsvdir "$SVDIR" > "$LOGS_DIR/runit.log" &
+            RUNIT_PID="$!"
+
+            watch -n1 pstree -p "$RUNIT_PID" -g3 -w
+
+            kill -HUP "$RUNIT_PID"
+          '';
+        };
         ilp-as = pkgs.writeShellApplication {
           name = "ilp-as";
+
+          runtimeInputs = [ ilp.cli ];
+
           text = ''
             name="$1"
             shift 1
@@ -57,7 +74,7 @@
             export ILP_CLI_API_AUTH="''${!auth_var}"
             export ILP_CLI_NODE_URL="http://''${!node_var}"
 
-            ${ilp.cli}/bin/ilp-cli "$@"
+            ilp-cli "$@"
           '';
         };
       in {
@@ -79,6 +96,7 @@
             pkgs.go-ethereum
             pkgs.nodePackages.ganache-cli
             pkgs.jq
+            rund
             ilp-as
             ilp.cli
             ilp.node

@@ -1,6 +1,7 @@
 #!/bin/sh
 
-sv up redis-charlie-node || exit 1
+sv up ganache || exit 1
+sv up redis-node-charlie || exit 1
 sv up xrp-charlie || exit 1
 
 exec ilp-node \

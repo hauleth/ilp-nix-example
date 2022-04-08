@@ -2,7 +2,7 @@
 
 exec 2>&1
 
-sv up redis-bob-se-xrp || exit 1
+sv up redis-xrp-bob || exit 1
 
 export DEBUG="*"
 export CONNECTOR_URL="http://localhost:8771"

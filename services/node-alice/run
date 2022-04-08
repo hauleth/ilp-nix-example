@@ -1,6 +1,7 @@
 #!/bin/sh
 
-sv up redis-alice-node || exit 1
+sv up ganache || exit 1
+sv up redis-node-alice || exit 1
 sv up eth-alice || exit 1
 
 exec ilp-node \
@@ -9,5 +10,4 @@ exec ilp-node \
   --admin_auth_token "$ALICE_AUTH" \
   --redis_url redis://127.0.0.1:6379/ \
   --http_bind_address "$ALICE_NODE" \
-  --settlement_api_bind_address 127.0.0.1:7771 \
-  --exchange_rate_provider CoinCap
+  --settlement_api_bind_address 127.0.0.1:7771
