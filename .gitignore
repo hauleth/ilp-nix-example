@@ -2,3 +2,4 @@
 /services/**/dump.rdb
 /logs
 !/logs/run
+dump.rdb
