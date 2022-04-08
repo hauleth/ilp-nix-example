@@ -1,0 +1,7 @@
+#!/bin/sh
+
+out="$LOGS_DIR/$NAME"
+
+mkdir -p "$out"
+
+exec svlogd "$out"

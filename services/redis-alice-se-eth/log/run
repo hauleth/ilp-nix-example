@@ -1,0 +1,9 @@
+#!/nix/store/067f780bk90ghn7yhz914d5fykmll7a4-bash-5.1-p16/bin/bash
+export NAME="$(basename "$(dirname "$PWD")")"
+
+out="$LOGS_DIR/$NAME"
+
+mkdir -p "$out"
+
+exec svlogd "$out"
+

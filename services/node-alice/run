@@ -1,0 +1,13 @@
+#!/bin/sh
+
+sv up redis-alice-node || exit 1
+sv up eth-alice || exit 1
+
+exec ilp-node \
+  --ilp_address example.alice \
+  --secret_seed 8852500887504328225458511465394229327394647958135038836332350604 \
+  --admin_auth_token "$ALICE_AUTH" \
+  --redis_url redis://127.0.0.1:6379/ \
+  --http_bind_address "$ALICE_NODE" \
+  --settlement_api_bind_address 127.0.0.1:7771 \
+  --exchange_rate_provider CoinCap

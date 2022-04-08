@@ -1,0 +1,16 @@
+#!/bin/sh
+
+exec 2>&1
+
+sv up ganache || exit 1
+sv up redis-bob-se-eth || exit 1
+
+exec ilp-settlement-ethereum \
+  --private_key cc96601bc52293b53c4736a12af9130abf347669b3813f9ec4cafdf6991b087e \
+  --confirmations 0 \
+  --poll_frequency 1000 \
+  --ethereum_url http://127.0.0.1:8545 \
+  --connector_url http://127.0.0.1:8771 \
+  --redis_url redis://127.0.0.1:6382/ \
+  --asset_scale 6 \
+  --settlement_api_bind_address 127.0.0.1:3001

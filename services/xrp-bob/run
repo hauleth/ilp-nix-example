@@ -1,0 +1,12 @@
+#!/bin/sh
+
+exec 2>&1
+
+sv up redis-bob-se-xrp || exit 1
+
+export DEBUG="*"
+export CONNECTOR_URL="http://localhost:8771"
+export REDIS_URI=127.0.0.1:6383
+export ENGINE_PORT=3002
+
+exec ilp-settlement-xrp

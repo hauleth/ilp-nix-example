@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec ganache-cli -m "abstract vacuum mammal awkward pudding scene penalty purchase dinner depart evoke puzzle" -i 1

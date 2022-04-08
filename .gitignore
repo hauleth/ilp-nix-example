@@ -1,0 +1,4 @@
+/services/**/supervise
+/services/**/dump.rdb
+/logs
+!/logs/run
