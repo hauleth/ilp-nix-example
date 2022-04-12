@@ -10,4 +10,5 @@ exec ilp-node \
   --admin_auth_token "$ALICE_AUTH" \
   --redis_url redis://127.0.0.1:6379/ \
   --http_bind_address "$ALICE_NODE" \
-  --settlement_api_bind_address 127.0.0.1:7771
+  --settlement_api_bind_address 127.0.0.1:7771 \
+  --exchange_rate.provider CoinCap

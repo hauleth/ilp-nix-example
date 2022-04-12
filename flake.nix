@@ -58,10 +58,22 @@
             kill -HUP "$RUNIT_PID"
           '';
         };
+        get = pkgs.writeShellApplication {
+          name = "get";
+
+          runtimeInputs = [pkgs.jq];
+
+          text = ''
+            user_var="$1"
+            path="$2"
+
+            echo "''${!user_var}" | jq -r ".$path"
+          '';
+        };
         ilp-as = pkgs.writeShellApplication {
           name = "ilp-as";
 
-          runtimeInputs = [ ilp.cli ];
+          runtimeInputs = [ ilp.ilp get ];
 
           text = ''
             name="$1"
@@ -69,10 +81,10 @@
 
             echo "Running as $name (waiting for 1s)" >&2
             sleep 1
-            auth_var="''${name^^}_AUTH"
-            node_var="''${name^^}_NODE"
-            export ILP_CLI_API_AUTH="''${!auth_var}"
-            export ILP_CLI_NODE_URL="http://''${!node_var}"
+            auth="$(get "$name" auth)"
+            node="http://$(get "$name" node)"
+            export ILP_CLI_API_AUTH="$auth"
+            export ILP_CLI_NODE_URL="$node"
 
             ilp-cli "$@"
           '';
@@ -97,9 +109,9 @@
             pkgs.nodePackages.ganache-cli
             pkgs.jq
             rund
+            get
             ilp-as
-            ilp.cli
-            ilp.node
+            ilp.ilp
             ilp.settlement-engines.eth
             ilp.settlement-engines.xrp
             create-service
@@ -108,29 +120,23 @@
           # Environment variables
           RUST_LOG = "interledger=debug";
 
-          # Auth
-          ALICE_AUTH = "ilp_alice";
-          ALICE_NODE = "127.0.0.1:7770";
-
-          BOB_AUTH = "ilp_bob";
-          BOB_NODE = "127.0.0.1:8770";
-
-          CHARLIE_AUTH = "ilp_charlie";
-          CHARLIE_NODE = "127.0.0.1:9770";
-
+          # Configuration
           alice = builtins.toJSON {
             auth = "ilp_alice";
             node = "127.0.0.1:7770";
+            token = "alice_token";
           };
 
           bob = builtins.toJSON {
             auth = "ilp_bob";
             node = "127.0.0.1:8770";
+            token = "bob_token";
           };
 
           charlie = builtins.toJSON {
             auth = "ilp_charlie";
             node = "127.0.0.1:9770";
+            token = "charlie_token";
           };
         };
       }

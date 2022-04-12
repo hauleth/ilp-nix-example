@@ -11,4 +11,5 @@ exec ilp-node \
   --admin_auth_token "$BOB_AUTH" \
   --redis_url redis://127.0.0.1:6381/ \
   --http_bind_address "$BOB_NODE" \
-  --settlement_api_bind_address 127.0.0.1:8771
+  --settlement_api_bind_address 127.0.0.1:8771 \
+  --exchange_rate.provider CoinCap

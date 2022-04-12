@@ -28,14 +28,6 @@
         mv ${pname} $out/bin
       '';
     };
-  cli = fetchIlp {
-    name = "cli";
-    sha256 = "8qzWUEG+R9Egw/rS7/jwm+qFQAs6tDbZ++8wLS/esIA=";
-  };
-  node = fetchIlp {
-    name = "node";
-    sha256 = "4amQTs0Sv0qznre0Hs/240Iz4ExmgjiwvOp0FbEczYc=";
-  };
   settlement-ethereum = fetchIlp {
     name = "settlement-ethereum";
     repo = "settlement-engines";
@@ -43,8 +35,33 @@
   };
   ilpPackages = import ./ilp-node {inherit pkgs;};
   settlement-xrp = ilpPackages.ilp-settlement-xrp;
+  ilp-rs = pkgs.rustPlatform.buildRustPackage {
+    name = "ilp-rs";
+
+    nativeBuildInputs = [
+      pkgs.gitMinimal
+    ];
+
+    buildInputs = pkgs.lib.optionals pkgs.stdenv.isDarwin [
+      pkgs.darwin.apple_sdk.frameworks.Security
+    ];
+
+    src = pkgs.fetchgit {
+      url = "https://github.com/interledger-rs/interledger-rs";
+      rev = "ac50084fb8b5e70e83d9ac966559842d4fe81000";
+
+      # We need that as ilp-cli needs to fetch some Git metadata
+      deepClone = true;
+
+      sha256 = "nhsQEBXqozLkKibVeb0tN7ZsS65UfhMrrNul5IqKV40=";
+    };
+
+    cargoSha256 = "zrBbEI4cKhcHK5cGLHP/CDwTOjMgiYddA7tzMv5+9pU=";
+
+    doCheck = false;
+  };
 in {
-  inherit cli node;
+  ilp = ilp-rs;
 
   settlement-engines = {
     eth = settlement-ethereum;
