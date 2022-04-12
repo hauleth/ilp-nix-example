@@ -12,7 +12,7 @@
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
-        ilp = import ./nix/ilp.nix { inherit pkgs; };
+        ilp = import ./nix/ilp.nix {inherit pkgs;};
         logger = pkgs.writeShellScript "logger" ''
           export NAME="$(basename "$(dirname "$PWD")")"
 
@@ -47,7 +47,7 @@
         rund = pkgs.writeShellApplication {
           name = "rund";
 
-          runtimeInputs = [ pkgs.runit pkgs.watch pkgs.pstree ];
+          runtimeInputs = [pkgs.runit pkgs.watch pkgs.pstree];
 
           text = ''
             runsvdir "$SVDIR" > "$LOGS_DIR/runit.log" &
@@ -73,7 +73,7 @@
         ilp-as = pkgs.writeShellApplication {
           name = "ilp-as";
 
-          runtimeInputs = [ ilp.ilp get ];
+          runtimeInputs = [ilp.ilp get];
 
           text = ''
             name="$1"

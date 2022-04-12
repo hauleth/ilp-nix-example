@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   triple = pkgs.stdenv.targetPlatform.config;
   fetchIlp = {
     name,
