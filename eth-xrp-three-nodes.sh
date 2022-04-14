@@ -37,7 +37,7 @@ ilp-as alice accounts create bob \
     --settlement-engine-url http://localhost:3000 \
     --ilp-over-http-incoming-token "$bob_token" \
     --ilp-over-http-outgoing-token "$alice_token" \
-    --ilp-over-http-url http://$BOB_NODE/accounts/alice/ilp \
+    --ilp-over-http-url http://$(get bob node)/accounts/alice/ilp \
     --settle-threshold 500 \
     --min-balance -1000 \
     --settle-to 0 \
@@ -53,7 +53,7 @@ ilp-as bob accounts create alice \
     --settlement-engine-url http://localhost:3001 \
     --ilp-over-http-incoming-token "$alice_token" \
     --ilp-over-http-outgoing-token "$bob_token" \
-    --ilp-over-http-url http://$ALICE_NODE/accounts/bob/ilp \
+    --ilp-over-http-url http://$(get alice node)/accounts/bob/ilp \
     --settle-threshold 500 \
     --min-balance -1000 \
     --settle-to 0 \
@@ -71,7 +71,7 @@ ilp-as bob accounts create charlie \
     --settlement-engine-url http://localhost:3002 \
     --ilp-over-http-incoming-token "$charlie_token" \
     --ilp-over-http-outgoing-token "$bob_token" \
-    --ilp-over-http-url http://$CHARLIE_NODE/accounts/bob/ilp \
+    --ilp-over-http-url http://$(get charlie node)/accounts/bob/ilp \
     --settle-threshold 0 \
     --settle-to -1000000 \
     --min-balance -10000000 \
@@ -100,7 +100,7 @@ ilp-as charlie accounts create bob \
     --settlement-engine-url http://localhost:3003 \
     --ilp-over-http-incoming-token "$bob_token" \
     --ilp-over-http-outgoing-token "$charlie_token" \
-    --ilp-over-http-url http://$BOB_NODE/accounts/charlie/ilp \
+    --ilp-over-http-url http://$(get bob node)/accounts/charlie/ilp \
     --settle-threshold 200000 \
     --settle-to -1000000 \
     --min-balance -10000000 \

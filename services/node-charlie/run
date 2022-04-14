@@ -6,8 +6,8 @@ sv up xrp-charlie || exit 1
 
 exec ilp-node \
   --secret_seed 1232362131122139900555208458637022875563691455429373719368053354 \
-  --admin_auth_token "$CHARLIE_AUTH" \
+  --admin_auth_token "$(get charlie auth)" \
   --redis_url redis://127.0.0.1:6384/ \
-  --http_bind_address "$CHARLIE_NODE" \
+  --http_bind_address "$(get charlie node)" \
   --settlement_api_bind_address 127.0.0.1:9771 \
   --exchange_rate.provider CoinCap
