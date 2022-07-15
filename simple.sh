@@ -16,7 +16,7 @@ ilp-as alice accounts create bob \
     --asset-scale 9 \
     --ilp-address example.bob \
     --ilp-over-http-outgoing-token "$alice_token" \
-    --ilp-over-http-url "http://$BOB_NODE/accounts/bob/ilp" \
+    --ilp-over-http-url "http://localhost:10100/accounts/bob/ilp" \
     | jq .
 
 # Insert accounts on Node B

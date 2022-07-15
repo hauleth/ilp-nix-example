@@ -1,0 +1,12 @@
+graph D {
+  Alice   [shape = box,  label = <Alice<br /><i>example.alice</i>>];
+  Bob     [shape = box,  label = <Bob<br /><i>example.bob</i>>];
+  Charlie [shape = oval, label = <Charlie<br /><i>example.alice.charlie</i>>];
+
+  Alice -- Charlie [label = "parent"];
+
+  subgraph {
+    rank = same;
+    Charlie -- Bob [label = "peer"];
+  }
+}

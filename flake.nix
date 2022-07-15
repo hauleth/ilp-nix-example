@@ -50,7 +50,7 @@
           runtimeInputs = [pkgs.runit pkgs.watch pkgs.pstree];
 
           text = ''
-            runsvdir "$SVDIR" > "$LOGS_DIR/runit.log" &
+            runsvdir "$SVDIR" > "$LOGS_DIR/runit.log" 2> "$LOGS_DIR/runit.err" &
             RUNIT_PID="$!"
 
             watch -n1 pstree -p "$RUNIT_PID" -g3 -w
@@ -89,6 +89,7 @@
             ilp-cli "$@"
           '';
         };
+        config = builtins.mapAttrs (name: value: builtins.toJSON value) (import ./config.nix);
       in {
         packages = {
           inherit ilp;
@@ -120,24 +121,7 @@
           # Environment variables
           RUST_LOG = "interledger=debug";
 
-          # Configuration
-          alice = builtins.toJSON {
-            auth = "ilp_alice";
-            node = "127.0.0.1:7770";
-            token = "alice_token";
-          };
-
-          bob = builtins.toJSON {
-            auth = "ilp_bob";
-            node = "127.0.0.1:8770";
-            token = "bob_token";
-          };
-
-          charlie = builtins.toJSON {
-            auth = "ilp_charlie";
-            node = "127.0.0.1:9770";
-            token = "charlie_token";
-          };
+          inherit (config) alice bob charlie;
         };
       }
     );
